@@ -1,32 +1,27 @@
-# Default server configuration
 server:
   port: 8761
-  servlet:
-    context-path: /
 
-# Default application configuration
 spring:
   application:
-    name: discovery-service
+    name: discovery-server
 
-# Default Eureka Server Configuration
 eureka:
   instance:
-    hostname: localhost
+    hostname: discovery-server
     prefer-ip-address: true
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
   client:
     register-with-eureka: false
     fetch-registry: false
     service-url:
-      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+      defaultZone: http://discovery-server:8761/eureka
   server:
     enable-self-preservation: false
     wait-time-in-ms-when-sync-empty: 0
     response-cache-update-interval-ms: 5000
     dashboard:
+      enabled: true
 
-# Default Actuator Endpoints
 management:
   endpoints:
     web:
@@ -42,7 +37,6 @@ management:
       env:
         enabled: true
 
-# Default Logging Configuration
 logging:
   level:
     root: INFO
@@ -53,5 +47,3 @@ logging:
       netflix:
         eureka: INFO
         discovery: INFO
-
- 
